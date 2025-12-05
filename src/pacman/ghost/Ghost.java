@@ -1,5 +1,6 @@
 package pacman.ghost;
 
+import pacman.board.BoardItem;
 import pacman.game.Entity;
 import pacman.game.PacmanGame;
 import pacman.util.Direction;
@@ -15,7 +16,6 @@ public abstract class Ghost extends Entity {
     private Phase phase;
     private int phaseDuration;
     private boolean dead;
-
 
     /**
      * Creates a ghost which is alive and starts in the SCATTER phase with a
@@ -35,17 +35,17 @@ public abstract class Ghost extends Entity {
      * @param newPhase - to set the ghost to.
      * @param duration - of ticks for the phase to lat for
      */
-     public void setPhase(Phase newPhase, int duration) {
-         if (newPhase != null) {
-             this.phase = newPhase;
-         }
+    public void setPhase(Phase newPhase, int duration) {
+        if (newPhase != null) {
+            this.phase = newPhase;
+        }
 
-         if (duration >= 0) {
-             this.phaseDuration = duration;
-         } else {
-             this.phaseDuration = 0;
-         }
-     }
+        if (duration >= 0) {
+            this.phaseDuration = duration;
+        } else {
+            this.phaseDuration = 0;
+        }
+    }
 
     /**
      * Get the phase that the ghost currently is in.
@@ -53,7 +53,7 @@ public abstract class Ghost extends Entity {
      */
     public Phase getPhase() {
         return phase;
-         }
+    }
 
     /*
      * NextPhase decreases our phase duration and moves us to the
@@ -86,8 +86,8 @@ public abstract class Ghost extends Entity {
     }
 
     /**
-     *Gets the ghosts colour.
-     * @return hex version of the ghosts colour, e.g. #FFFFFF for white
+     *Gets the ghosts color.
+     * @return hex version of the ghosts color
      */
     public abstract String getColour();
 
@@ -126,7 +126,7 @@ public abstract class Ghost extends Entity {
     /**
      * Checks if another object instance is equal to this Ghost.
      * Ghosts are equal if they have the same alive/dead status, phase duration,
-     * current phase, direction and position.     *
+     * current phase, direction and position.
      * @return true if equal, false otherwise.
      */
     public boolean equals(Object o) {
@@ -239,22 +239,35 @@ public abstract class Ghost extends Entity {
             int newX = getPosition().getX() + d.offset().getX();
             int newY = getPosition().getY() + d.offset().getY();
             Position newPosition = new Position(newX, newY);
-            // Check if this new position has smallest distance,
-            // is pathable and not opposite to current
+
             try {
+                BoardItem currentItem = game.getBoard().getEntry(getPosition());
+                BoardItem nextItem    = game.getBoard().getEntry(newPosition);
+
+                // 🚫 Do NOT move back into the ghost spawn ('$') once we've left it.
+                // Allowed:
+                //   - starting from '$' and leaving to a neighbour
+                // Blocked:
+                //   - any move into '$' if we are currently NOT on '$'
+                if (nextItem == BoardItem.GHOST_SPAWN
+                        && currentItem != BoardItem.GHOST_SPAWN) {
+                    continue;
+                }
+
+                // Check if this new position has smallest distance,
+                // is pathable and not opposite to current
                 if (newPosition.distance(targetPosition) <= smallestDistance
-                        && game.getBoard().getEntry(newPosition).getPathable()
+                        && nextItem.getPathable()
                         && !(d == getDirection().opposite())) {
                     // Passed check, new chosen direction and position
-                    smallestDistance = newPosition.distance(getTarget(game));
+                    smallestDistance = newPosition.distance(targetPosition);
                     chosenDirection = d;
                     chosenPosition = newPosition;
                 }
-            } catch(IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException e) {
                 // position is out of bounds, continue to next direction
                 continue;
             }
-
         }
         // 4 - set direction & position
         setDirection(chosenDirection);
@@ -271,7 +284,7 @@ public abstract class Ghost extends Entity {
      */
     @Override
     public void move(PacmanGame game) {
-        //decrease phase duration by 1 and if duration 0, move to next phase
+        // decrease phase duration by 1 and if duration 0, move to next phase
         nextPhase();
         // set position and direction based on target position.
         setMovePosition(game);

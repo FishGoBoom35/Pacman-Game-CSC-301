@@ -1,3 +1,14 @@
+/**
+ * Based on: Pacman-Game by Teanlouise
+ * Took essentially the entire code for the pac-man game from Teanlouise, only modified the ghost files
+ * to implement our own algorithms.
+ * Original repo: https://github.com/Teanlouise/Pacman-Game
+ *
+ * Modifications by: Rodrigo & Sean
+ * Course: CSC-301 Final Project
+ * Date: 2025-11-28
+ * 
+*/
 package pacman;
 
 import javafx.application.Application;

@@ -1,3 +1,4 @@
+
 package pacman.display;
 
 import javafx.animation.AnimationTimer;
@@ -48,7 +49,7 @@ public class MainView {
         this.viewModel = viewModel;
 
         // set the title
-        root.setTitle("CSSE2002/7023 PacMan");
+        root.setTitle("CSC-301 Final PacMan Project");
 
         // set the window size
         root.setWidth(1080);

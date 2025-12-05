@@ -178,8 +178,8 @@ public class BoardView {
     }
 
     /*
-     * Draws a Ghost ( each bit speratly ) on the given context at the
-     * location provided with a specified colour.
+     * Draws a Ghost ( each bit separately ) on the given context at the
+     * location provided with a specified color.
      */
     private void drawGhost(GraphicsContext gc, Position location,
             String colour) {

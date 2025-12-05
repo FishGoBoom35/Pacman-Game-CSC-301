@@ -140,23 +140,23 @@ public class MainViewModel {
                 // Get delay according to level
                 case (0):
                 case (1):
-                    delay = 50;
+                    delay = 10;
                     break;
                 case (2):
                 case (3):
-                    delay = 40;
+                    delay = 9;
                     break;
                 case (4):
                 case (5):
-                    delay = 30;
+                    delay = 8;
                     break;
                 case (6):
                 case (7):
                 case (8):
-                    delay = 20;
+                    delay = 7;
                     break;
                 default:
-                    delay = 10;
+                    delay = 6;
                     break;
             }
 

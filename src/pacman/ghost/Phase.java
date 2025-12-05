@@ -9,9 +9,9 @@ package pacman.ghost;
  *      "SCATTER" - Phase where the ghosts run home. Has a duration of 10. *
  */
 public enum Phase {
-    CHASE(20),
-    FRIGHTENED(30),
-    SCATTER(10);
+    CHASE(999),
+    FRIGHTENED(20),
+    SCATTER(5);
 
     private int duration;
 
