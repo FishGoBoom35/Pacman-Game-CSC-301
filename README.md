@@ -1,102 +1,14 @@
-[Back to Home](https://teanlouise.github.io)
+PacMan Program that attempts to use a BFS graphing algorithm for Blinky, a A* graphing algorithm for Pinky, a hybrid of the two for Inky, and Clyde still the same.
+Original PacMan code from https://github.com/Teanlouise/Pacman-Game, essentially all of the code from this project is theirs, outside of the above mentioned Ghost algorithms, a slightly modified map, and slighty
+modified code for speed of pacman and ghosts etc.
 
-![title_pacman](./title_pacman.PNG)
+We used whatever resources we could, that being ChatGPT, GeeksForGeeks, StackOverFlow, etc. and whatever else we could find that would help.
 
-This version of the traditional 'Pacman' game was implemented over the course of three assignments for CSSE2002 (Programming in the Large) at the University of Queensland. The overall goal of the project was to gain confidence with writing and testing code in Java that expands multiple classes. The marking criteria was according to correct functionality (55%), code review (25%) and successful tests (20%). Each assignment received a high distinction.
+Inspiration for PacMan and the algorithm use
+Novikov, A., Yakovlev, S., & Gushchin, I. (2025). Exploring the possibilities of MADDPG for UAV swarm control by simulating in Pac-Man environment. Radioelectronic and Computer Systems, 2025(1), 327–337. 
+https://doi.org/10.32620/reks.2025.1.21
 
-Throughout this project, I expertly handled invariants and exceptions. I demonstrated strong understanding of different access modifiers (private, public), non-access modifiers (abstract, static, final), data types (primitive, reference) and collections (maps, arrays, lists) As well as highlighting my ability to logically use subclasses (inheritance, super, casting) and parse variables.
+Summary:
+To be honest, the original program seemed pretty stable up until starting to really modify the code for what we wanted, that is when a lot of the problems started showing up and by that point it was way too close to the deadline to completely restart. In hindsight, should have looked earlier on and sooner. But with what is done, tried to change the format to be more like the original pacman, but that created a larger mess, so, decided to just focus more on the algorithms itself, although granted even that seems to be a shitshow. I can't figure out if certain things the ghosts do are because of what was implemented or if its because of the base code conflicting with the changes, it is hard to figure out what the base code does and all of the intricacies/weaknesses/strengths are for the base code (since I didnt write it, and there is more "TODO's" than I remember seeing, but despite all this, its been a huge learning experience. The largest weaknesses mostly has to do with an inability to source where some of the problems are located (maybe its what was changed conflicting with the base code). The strengths are, I think Inkys algorithm is pretty good, especially in culmination with blinky and pinky. The ghosts compliment each other pretty well, and I dont know how possible it would be for pacman if he didnt start a little faster. There is also no middle "teleport", since it was kind of late to implement and unfortunately the base pacman github dis not have that, maybe will add in the future. For weaknesses, the ghosts not being able to change directions I think is the biggest problem, but thats base pacman. The other main weakness is kind of based on what was just said. The engine evaluates ghost targets only once per movement update, meaning the ghosts do not always feel perfectly reactive if Pac-Man changes direction rapidly, since once they move down a corridor they have to commit to that.
 
-[![video_pacman](./video_pacman.png)](https://youtu.be/cDlTd49BDQE)
-
-Each assignment required the full implementation of precisely the set of classes and interfaces described in the Javadoc (though private members or classes was at own discretion) that would be used in the following assignment to complete the implementation. All of the classes would be tested extensively against, an unknown, suite of tests. Additionally, I was to write JUnit tests that would be used to test, unknown, faulty implementations of the methods in:
-- PacmanBoard (1)
-- ScoreBoard (1)
-- GameReader (2)
-- GameWriter (2)
-- BoardViewModel (3)
-- ScoreViewModel (3)
-
-All other tests were used for my own testing purposes.
-
-_The javadoc, specifications and code in ScoreModel, BoardModel and MainModel are the property of the respective authors at the University of Queensland_
-
-
-### Overview of the javadoc:
-
-**Pacman**
-
-* Launcher [class] - Main entry point for the CSSE2002/7023 PacMan Game.
-
-**Display**
-
-* BoardView - View representation of the Games playable are.
-
-* BoardViewModel - BoardViewModel is the intermediary between BoardView and the PacmanGame.
-
-* MainView - Main entry point for the Pacman View.
-
-* MainViewModel - Used as an intermediary between the game and the MainView.
-
-* ScoreView - Represents the view for the score display in the application.
-
-* ScoreViewModel - ScoreViewModel is an intermediary between ScoreView and the PacmanGame. Used for displaying the player's score in the GUI.
- 
-**Board**
-
-* PacmanBoard [class] - Represents the Pac Man game board. The board can be any size, it is set out as a grid with each space containing only one BoardItem. Game boards are by default surrounded by a BoardItem.WALL with every other space being BoardItem.NONE.
-
-* BoardItem [enum] - This enum defines different items that are placed on the board. Items may have a pickup score if the item can be picked up. Items must define whether they are path-able.
- 
-**Game**
-
-* Moveable [interface] - An object that can move with a current position and a direction.
-
-* Entity [class] - A entity is the animated objects in the game that can traverse the game board and interact with other entities.
-
-* GameReader [class] - GameReader Reads in a saved games state and returns a game instance.
-
-* GameWriter [class] - Writes the PacmanGame to a standard format.
-
-* PacmanGame [class] - PacmanGame stores the game's state and acts as the model for the entire game.
- 
-**Ghost**
-
-* GhostType [enum] - GhostType contains all the valid ghosts; the current list of ghosts are: "BLINKY", "CLYDE", "INKY", "PINKY".
-
-* Phase [enum] - Phase Defines the different phases a ghost can be in.
-
-* Ghost [class] - An Abstract Ghost which is a game entity.
-
-* Blinky [class] - Blinky is a ghost that behaves in a very aggressive manner towards a hunter.
-
-* Clyde [class] - Clyde is a ghost that behaves in a very scared manner when close to a hunter.
-
-* Inky [class] - Inky is a ghost that likes to tail close behind the hunter.
-
-* Pinky [class] - Pinky is a cunning ghost that tries to ambush the hunter.
- 
-**Hunter**
-
-* HunterType [enum] - Definition of HunterType's available in the game.
-
-* Hunter [class] - Hunters are entities which are controlled by the player to clear the board and win the game.
-
-* Hungry [class] - A Hungry hunter that has a special ability that allows the hunter to eat ghosts temporarily without them being in a Frightened state.
-
-* Phasey [class] - A Phasey hunter with a special ability that allows the hunter to travel through ghosts temporarily without dieing.
-
-* Phil [class] - A Phil hunter that has no special ability.
-
-* Speedy [class] - A Speedy hunter that has a special ability that allows the hunter to travel twice as fast.
- 
-**Score**
-
-* ScoreBoard [class] - ScoreBoard contains previous scores and the current score of the PacmanGame.
- 
-**util**
-
-* Position [class] - Similar to a Point Class but instead called Position.
-
-* Direction [enum] - Direction represents directions in a 2D plane.
-
-* UnpackableException - Exception thrown when a game file cannot be unpacked.
+Blinky was implemented using a pure Breadth-First Search (BFS) approach. BFS guarantees the shortest path in an unweighted grid, allowing Blinky to aggressively pursue Pac-Man. Pinky was rewritten using an A* search algorithm aimed at a “ambush” tile four spaces ahead of Pac-Man. This gave Pinky a more "strategic" chase pattern compared to Blinky’s direct pursuit. Clyde’s behavior was rebuilt to match the classic design: when farther than eight tiles from Pac-Man, he uses BFS to chase him, but when he gets too close, his target immediately switches to the bottom-left corner, producing the characteristic “cowardly retreat.” Finally, Inky was designed as a hybrid ghost, comparing a BFS path directly to Pac-Man with an A* path toward a projected ambush point (found this to be a much better method than having the two algorithms rotate). Inky selects whichever path is shorter, allowing him to "predict" Pac-Man, and create a more lethal ghost.
